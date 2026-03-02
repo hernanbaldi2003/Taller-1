@@ -2,13 +2,16 @@
 
 int main()
 {
+    printf("##################################################\n");
+    printf("  EVALUADOR DE EXPRESIONES MATEMATICAS ENTERAS\n");
+    printf("##################################################\n");
     ListaExp lexp;
     crearListaExp(lexp);
 
     while (TRUE)
     {
         string texto;
-        printf("\nIngrese un texto: ");
+        printf("\nIngrese un comando: ");
         strcrear(texto);
         scan(texto);
 

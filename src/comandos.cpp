@@ -71,7 +71,7 @@ void ejecutarComando(ListaPalabras lpalabras, ListaExp &lexp)
 
 void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
 {
-    printf("\nComando ejecutado: simple");
+    printf("\nComando ejecutado: SIMPLE");
 
     if (largoListaPalabras(lpal) != 1)
     {
@@ -86,7 +86,7 @@ void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
         a->tipo = NUMERO;
         a->dato.valor = convertirAEntero(lpal->palabra);
         insertarExpresion(lexp, a);
-        printf("\n --> NODO INGRESADO CORRECTAMENTE: ");
+        printf("\n --> EXPRESION SIMPLE INGRESADA CORRECTAMENTE: ");
         mostrarArbol(a);
         printf("\n");
     }
@@ -98,7 +98,7 @@ void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
         a->tipo = VARIABLE;
         a->dato.variable = 'x';
         insertarExpresion(lexp, a);
-        printf("\n --> NODO INGRESADO CORRECTAMENTE: ");
+        printf("\n --> EXPRESION SIMPLE INGRESADA CORRECTAMENTE: ");
         mostrarArbol(a);
         printf("\n");
     }
@@ -109,7 +109,7 @@ void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
 
 void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 {
-    printf("\nComando ejecutado: compuesta");
+    printf("\nComando ejecutado: COMPUESTA");
 
     if (largoListaPalabras(listaPars) != 3)
     {
@@ -187,33 +187,33 @@ void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 
 void ejecutar_mostrar(ListaPalabras listaPars, ListaExp lista)
 {
-    printf("\nComando ejecutado: mostrar\n");
+    printf("\nComando ejecutado: MOSTRAR\n");
     mostrarListaExp(lista);
 }
 
 void ejecutar_calcular(ListaPalabras listaPars, ListaExp lista)
 {
-    printf("\nComando ejecutado: calcular");
+    printf("\nComando ejecutado: CALCULAR");
 }
 
 void ejecutar_iguales(ListaPalabras listaPars, ListaExp lista)
 {
-    printf("\nComando ejecutado: iguales");
+    printf("\nComando ejecutado: IGUALES");
 }
 
 void ejecutar_guardar(ListaPalabras listaPars, ListaExp lista)
 {
-    printf("\nComando ejecutado: guardar");
+    printf("\nComando ejecutado: GUARDAR");
 }
 
 void ejecutar_recuperar(ListaPalabras listaPars, ListaExp &lista)
 {
-    printf("\nComando ejecutado: recuperar");
+    printf("\nComando ejecutado: RECUPERAR");
 }
 
 void ejecutar_salir(ListaPalabras listaPars, ListaExp &lista)
 {
-    printf("\nComando ejecutado: salir");
+    printf("\nComando ejecutado: SALIR");
     destruirListaExp(lista);
     printf("\n<<< PROGRAMA FINALIZADO >>>\n");
     exit(0);
