@@ -12,7 +12,6 @@ typedef enum
 
 typedef struct NodoA
 {
-
     TipoNodo tipo;
     union
     {
@@ -34,11 +33,10 @@ boolean vacioArbol(ArbolExp a);
 void destruirArbol(ArbolExp &a);
 
 // construcción
-void crearNodo(ArbolExp &a, TipoNodo tipo, char operador, int valor);
 ArbolExp copiarArbol(ArbolExp a);
 
 // recorridos
-void mostrarInOrden(ArbolExp a);
+void mostrarArbol(ArbolExp a);
 
 // evaluación
 int evaluarExpresion(ArbolExp a, int valor);

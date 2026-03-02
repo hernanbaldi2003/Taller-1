@@ -4,6 +4,10 @@
 #include "archivo.h"
 #include "parsing.h"
 
+int codigoComando(string comando);
+
+void ejecutarComando(ListaPalabras lpal, ListaExp &lexp);
+
 void ejecutar_simple(ListaPalabras listaPars, ListaExp &lista);
 
 void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista);

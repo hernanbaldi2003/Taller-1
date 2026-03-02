@@ -10,11 +10,6 @@ typedef struct NodoP
 
 typedef NodoPalabra *ListaPalabras;
 
-// auxiliares
-boolean esNumerico(string s);
-boolean esPositivo(string s);
-boolean esAlfabetico(string s);
-
 // básicas
 void crearListaPalabras(ListaPalabras &L);
 boolean vaciaListaPalabras(ListaPalabras L);
@@ -29,5 +24,4 @@ void mostrarListaPalabras(ListaPalabras L);
 
 // parsing
 void parsearStr(string texto, ListaPalabras &L);
-
 #endif

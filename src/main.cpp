@@ -2,19 +2,22 @@
 
 int main()
 {
-    string texto;
-    printf("\nIngrese un texto: ");
-    strcrear(texto);
-    scan(texto);
+    ListaExp lexp;
+    crearListaExp(lexp);
 
-    ListaPalabras L;
-    crearListaPalabras(L);
-    parsearStr(texto, L);
+    while (TRUE)
+    {
+        string texto;
+        printf("\nIngrese un texto: ");
+        strcrear(texto);
+        scan(texto);
 
-    printf("\nPalabras parseadas:");
-    mostrarListaPalabras(L);
+        ListaPalabras L;
+        crearListaPalabras(L);
+        parsearStr(texto, L);
+        strdestruir(texto);
 
-    destruirListaPalabras(L);
-    strdestruir(texto);
-
+        ejecutarComando(L, lexp);
+        destruirListaPalabras(L);
+    }
 }

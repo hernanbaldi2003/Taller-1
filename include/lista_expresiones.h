@@ -18,7 +18,7 @@ void destruirListaExp(ListaExp &l);
 boolean vaciaListaExp(ListaExp l);
 
 // insertar
-void insertarExpresion(ListaExp &l, ArbolExp a, int indice);
+void insertarExpresion(ListaExp &l, ArbolExp a);
 
 // consultas
 int largoListaExp(ListaExp l);

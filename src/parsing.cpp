@@ -1,70 +1,5 @@
 #include "parsing.h"
 
-boolean esNumerico(string s)
-{
-    int largo = strlar(s);
-    int i = 0;
-
-    if (largo == 0)
-        return FALSE;
-
-    if (s[0] == '-')
-    {
-        if (largo == 1)
-            return FALSE;
-        else
-            i = 1;
-    }
-
-    boolean esNum = TRUE;
-    while (i < largo && esNum == TRUE)
-    {
-        if (s[i] < '0' || s[i] > '9')
-            esNum = FALSE;
-        else
-            i++;
-    }
-    return esNum;
-}
-
-boolean esPositivo(string s)
-{
-    int largo = strlar(s);
-    int i = 0;
-
-    if (largo == 0)
-        return FALSE;
-
-    boolean esPos = TRUE;
-    while (i < largo && esPos == TRUE)
-    {
-        if (s[i] < '0' || s[i] > '9')
-            esPos = FALSE;
-        else
-            i++;
-    }
-    return esPos;
-}
-
-boolean esAlfabetico(string s)
-{
-    int largo = strlar(s);
-    int i = 0;
-
-    if (largo == 0)
-        return FALSE;
-
-    boolean esAlfa = TRUE;
-    while (i < largo && esAlfa == TRUE)
-    {
-        if ((s[i] < 'a' || s[i] > 'z') && (s[i] < 'A' || s[i] > 'Z'))
-            esAlfa = FALSE;
-        else
-            i++;
-    }
-    return esAlfa;
-}
-
 void crearListaPalabras(ListaPalabras &l)
 {
     l = NULL;
@@ -151,7 +86,7 @@ void parsearStr(string texto, ListaPalabras &l)
         palabra = new char[largoPalabra + 1];
 
         for (int j = 0; j < largoPalabra; j++)
-            palabra[j] = texto[inicio + j];
+            palabra[j] = (char)tolower((unsigned char)texto[inicio + j]);
 
         palabra[largoPalabra] = '\0';
 

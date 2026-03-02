@@ -98,23 +98,6 @@ void print(string s)
     printf("\n");
 }
 
-boolean strmen(string s1, string s2)
-{
-    int i = 0;
-    while (s1[i] != '\0' && s2[i] != '\0')
-    {
-        if (s1[i] < s2[i])
-            return TRUE;
-        if (s1[i] > s2[i])
-            return FALSE;
-        i++;
-    }
-    if (s1[i] == '\0' && s2[i] != '\0')
-        return TRUE;
-    else
-        return FALSE;
-}
-
 boolean streq(string s1, string s2)
 {
     int i = 0;
@@ -170,4 +153,94 @@ boolean levantarString(string &s, FILE *f)
     s[largo] = '\0';
 
     return TRUE;
+}
+
+void minusculas(char *s)
+{
+    if (s == NULL)
+        return;
+
+    int largo = strlar(s);
+
+    for (int i = 0; i < largo; i++)
+    {
+        s[i] = (char)tolower((unsigned char)s[i]);
+    }
+}
+
+boolean esNumerico(string s)
+{
+    int largo = strlar(s);
+    int i = 0;
+
+    if (largo == 0)
+        return FALSE;
+
+    if (s[0] == '-')
+    {
+        if (largo == 1)
+            return FALSE;
+        else
+            i = 1;
+    }
+
+    boolean esNum = TRUE;
+    while (i < largo && esNum == TRUE)
+    {
+        if (s[i] < '0' || s[i] > '9')
+            esNum = FALSE;
+        else
+            i++;
+    }
+    return esNum;
+}
+
+boolean esPositivo(string s)
+{
+    int largo = strlar(s);
+    int i = 0;
+
+    if (largo == 0)
+        return FALSE;
+
+    boolean esPos = TRUE;
+    while (i < largo && esPos == TRUE)
+    {
+        if (s[i] < '0' || s[i] > '9')
+            esPos = FALSE;
+        else
+            i++;
+    }
+    return esPos;
+}
+
+boolean esAlfabetico(string s)
+{
+    int largo = strlar(s);
+    int i = 0;
+
+    if (largo == 0)
+        return FALSE;
+
+    boolean esAlfa = TRUE;
+    while (i < largo && esAlfa == TRUE)
+    {
+        if ((s[i] < 'a' || s[i] > 'z') && (s[i] < 'A' || s[i] > 'Z'))
+            esAlfa = FALSE;
+        else
+            i++;
+    }
+    return esAlfa;
+}
+
+int convertirAEntero(string &str)
+{
+    int resultado = 0;
+    int i = 0;
+    while (str[i] != '\0')
+    {
+        resultado = resultado * 10 + (str[i] - '0');
+        i++;
+    }
+    return resultado;
 }
