@@ -62,8 +62,85 @@ void mostrarArbol(ArbolExp a)
     }
 }
 
-ArbolExp copiarArbol(ArbolExp a) {}
+ArbolExp copiarArbol(ArbolExp a)
+{
+    if (a == NULL)
+    {
+        return NULL;
+    }
 
-int evaluarExpresion(ArbolExp a, int valor) {}
+    ArbolExp nuevo;
+    crearArbol(nuevo);
+
+    nuevo->tipo = a->tipo;
+    switch (a->tipo)
+    {
+    case NUMERO:
+        nuevo->dato.valor = a->dato.valor;
+        break;
+    case VARIABLE:
+        nuevo->dato.variable = a->dato.variable;
+        break;
+    case OPERADOR:
+        nuevo->dato.operador = a->dato.operador;
+        break;
+    case PARENTESIS:
+        nuevo->dato.parentesis = a->dato.parentesis;
+        break;
+    }
+
+    nuevo->izq = copiarArbol(a->izq);
+    nuevo->der = copiarArbol(a->der);
+
+    return nuevo;
+}
+
+int evaluarExpresion(ArbolExp a, int valor)
+{
+    if (a == NULL)
+        return 0;
+
+    switch (a->tipo)
+    {
+
+    case NUMERO:
+        return a->dato.valor;
+
+    case VARIABLE:
+        return valor;
+
+    case OPERADOR:
+    {
+        int izq = evaluarExpresion(a->izq, valor);
+        int der = evaluarExpresion(a->der, valor);
+
+        switch (a->dato.operador)
+        {
+        case '+':
+            return izq + der;
+        case '-':
+            return izq - der;
+        case '*':
+            return izq * der;
+        case '/':
+            if (der == 0)
+            {
+                printf("\n<<< ERROR: DIVISION POR CERO >>>");
+                return 0;
+            }
+            return izq / der;
+        default:
+            printf("\n<<< ERROR: OPERADOR DESCONOCIDO >>>");
+            return 0;
+        }
+    }
+
+    case PARENTESIS:
+        return evaluarExpresion(a->izq, valor);
+
+    default:
+        return 0;
+    }
+}
 
 boolean igualesExpresiones(ArbolExp a1, ArbolExp a2) {}

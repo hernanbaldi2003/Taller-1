@@ -75,7 +75,7 @@ void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
 
     if (largoListaPalabras(lpal) != 1)
     {
-        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>");
+        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
         return;
     }
 
@@ -104,85 +104,63 @@ void ejecutar_simple(ListaPalabras lpal, ListaExp &lexp)
     }
 
     else
-        printf("\n<<< ERROR: PARAMETRO INVALIDO >>>");
+        printf("\n<<< ERROR: PARAMETRO INVALIDO >>>\n");
 }
 
 void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 {
     printf("\nComando ejecutado: COMPUESTA");
 
-    if (largoListaPalabras(listaPars) != 3)
-    {
-        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>");
+    if (largoListaPalabras(listaPars) != 3) {
+        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
         return;
     }
 
-    // crea las variables con los parametros
-    string izqStr = listaPars->palabra;
-    string opStr = listaPars->sig->palabra;
-    string derStr = listaPars->sig->sig->palabra;
+    string izqIndice = listaPars->palabra;
+    string operador   = listaPars->sig->palabra;
+    string derIndice = listaPars->sig->sig->palabra;
 
-    // crea el nodo operador como raiz
+    // valido indices
+    if (!esPositivo(izqIndice) || !esPositivo(derIndice)) {
+        printf("\n<<< ERROR: INDICES DEBEN SER ENTEROS POSITIVOS >>>\n");
+        return;
+    }
+
+    int id1 = convertirAEntero(izqIndice);
+    int id2 = convertirAEntero(derIndice);
+
+    // valido operadores
+    char op = operador[0];
+    if (!(op == '+' || op == '-' || op == '*' || op == '/')) {
+        printf("\n<<< ERROR: OPERADOR INVALIDO >>>\n");
+        return;
+    }
+
+    // tomo las expresiones guardadas
+    ArbolExp exp1 = obtenerExpresion(lista, id1);
+    ArbolExp exp2 = obtenerExpresion(lista, id2);
+
+    if (exp1 == NULL || exp2 == NULL) {
+        printf("\n<<< ERROR: ALGUNO DE LOS INDICES NO EXISTE >>>\n");
+        return;
+    }
+
+    // creo la raiz operador
     ArbolExp raiz;
     crearArbol(raiz);
     raiz->tipo = OPERADOR;
-    raiz->dato.operador = opStr[0]; // el [0] lo pasa a char
+    raiz->dato.operador = op;
 
-    // crea subarbol izquierdo
-    ArbolExp izq;
-    crearArbol(izq);
+    // copio los subarboles
+    raiz->izq = copiarArbol(exp1);
+    raiz->der = copiarArbol(exp2);
 
-    if (esNumerico(izqStr))
-    {
-        izq->tipo = NUMERO;
-        izq->dato.valor = convertirAEntero(izqStr);
-    }
-
-    else if (streq(izqStr, (string) "x") == TRUE)
-    {
-        izq->tipo = VARIABLE;
-        izq->dato.variable = 'x';
-    }
-
-    else
-    {
-        printf("\n<<< ERROR: PARAMETRO IZQUIERDO INVALIDO >>>");
-        destruirArbol(raiz);
-        return;
-    }
-
-    raiz->izq = izq;
-
-    // crea subarbol derecho
-    ArbolExp der;
-    crearArbol(der);
-
-    if (esNumerico(derStr))
-    {
-        der->tipo = NUMERO;
-        der->dato.valor = convertirAEntero(derStr);
-    }
-
-    else if (streq(derStr, (string) "x") == TRUE)
-    {
-        der->tipo = VARIABLE;
-        der->dato.variable = 'x';
-    }
-
-    else
-    {
-        printf("\n<<< ERROR: PARAMETRO DERECHO INVALIDO >>>");
-        destruirArbol(raiz);
-        return;
-    }
-
-    raiz->der = der;
-
-    // inserta en la lista de expresiones
+    // insertar en lista
     insertarExpresion(lista, raiz);
+
     printf("\n --> EXPRESION COMPUESTA INGRESADA CORRECTAMENTE: ");
     mostrarArbol(raiz);
-    printf("\n");
+     printf("\n");
 }
 
 void ejecutar_mostrar(ListaPalabras listaPars, ListaExp lista)
@@ -194,6 +172,40 @@ void ejecutar_mostrar(ListaPalabras listaPars, ListaExp lista)
 void ejecutar_calcular(ListaPalabras listaPars, ListaExp lista)
 {
     printf("\nComando ejecutado: CALCULAR");
+
+    if (largoListaPalabras(listaPars) != 2) {
+        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
+        return;
+    }
+
+    string indice = listaPars->palabra;
+    string valor= listaPars->sig->palabra;
+
+    // valido indice
+    if (!esPositivo(indice)) {
+        printf("\n<<< ERROR: INDICE DEBE SER ENTERO POSITIVO >>>\n");
+        return;
+    }
+    int id = convertirAEntero(indice);
+
+    // valido valor numerico
+    if (!esNumerico(valor)) {
+        printf("\n<<< ERROR: VALOR DEBE SER NUMERICO >>>\n");
+        return;
+    }
+    int valorNum = convertirAEntero(valor);
+
+    // obtengo la expresion
+    ArbolExp exp = obtenerExpresion(lista, id);
+    if (exp == NULL) {
+        printf("\n<<< ERROR: NO EXISTE EXPRESION CON ESE INDICE >>>\n");
+        return;
+    }
+
+    // Evaluar
+    int resultado = evaluarExpresion(exp, valorNum);
+
+    printf("\n --> RESULTADO DE LA EXPRESION [%d] CON X = %d: %d\n", id, valorNum, resultado);
 }
 
 void ejecutar_iguales(ListaPalabras listaPars, ListaExp lista)
