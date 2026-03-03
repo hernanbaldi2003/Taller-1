@@ -5,6 +5,7 @@ int main()
     printf("##################################################\n");
     printf("  EVALUADOR DE EXPRESIONES MATEMATICAS ENTERAS\n");
     printf("##################################################\n");
+    
     ListaExp lexp;
     crearListaExp(lexp);
 

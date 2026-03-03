@@ -111,17 +111,19 @@ void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 {
     printf("\nComando ejecutado: COMPUESTA");
 
-    if (largoListaPalabras(listaPars) != 3) {
+    if (largoListaPalabras(listaPars) != 3)
+    {
         printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
         return;
     }
 
     string izqIndice = listaPars->palabra;
-    string operador   = listaPars->sig->palabra;
+    string operador = listaPars->sig->palabra;
     string derIndice = listaPars->sig->sig->palabra;
 
     // valido indices
-    if (!esPositivo(izqIndice) || !esPositivo(derIndice)) {
+    if (!esPositivo(izqIndice) || !esPositivo(derIndice))
+    {
         printf("\n<<< ERROR: INDICES DEBEN SER ENTEROS POSITIVOS >>>\n");
         return;
     }
@@ -131,7 +133,8 @@ void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 
     // valido operadores
     char op = operador[0];
-    if (!(op == '+' || op == '-' || op == '*' || op == '/')) {
+    if (!(op == '+' || op == '-' || op == '*' || op == '/'))
+    {
         printf("\n<<< ERROR: OPERADOR INVALIDO >>>\n");
         return;
     }
@@ -140,7 +143,8 @@ void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
     ArbolExp exp1 = obtenerExpresion(lista, id1);
     ArbolExp exp2 = obtenerExpresion(lista, id2);
 
-    if (exp1 == NULL || exp2 == NULL) {
+    if (exp1 == NULL || exp2 == NULL)
+    {
         printf("\n<<< ERROR: ALGUNO DE LOS INDICES NO EXISTE >>>\n");
         return;
     }
@@ -160,7 +164,7 @@ void ejecutar_compuesta(ListaPalabras listaPars, ListaExp &lista)
 
     printf("\n --> EXPRESION COMPUESTA INGRESADA CORRECTAMENTE: ");
     mostrarArbol(raiz);
-     printf("\n");
+    printf("\n");
 }
 
 void ejecutar_mostrar(ListaPalabras listaPars, ListaExp lista)
@@ -173,36 +177,40 @@ void ejecutar_calcular(ListaPalabras listaPars, ListaExp lista)
 {
     printf("\nComando ejecutado: CALCULAR");
 
-    if (largoListaPalabras(listaPars) != 2) {
+    if (largoListaPalabras(listaPars) != 2)
+    {
         printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
         return;
     }
 
     string indice = listaPars->palabra;
-    string valor= listaPars->sig->palabra;
+    string valor = listaPars->sig->palabra;
 
     // valido indice
-    if (!esPositivo(indice)) {
+    if (!esPositivo(indice))
+    {
         printf("\n<<< ERROR: INDICE DEBE SER ENTERO POSITIVO >>>\n");
         return;
     }
     int id = convertirAEntero(indice);
 
     // valido valor numerico
-    if (!esNumerico(valor)) {
+    if (!esNumerico(valor))
+    {
         printf("\n<<< ERROR: VALOR DEBE SER NUMERICO >>>\n");
         return;
     }
     int valorNum = convertirAEntero(valor);
 
-    // obtengo la expresion
+    // valido que exista expresion
     ArbolExp exp = obtenerExpresion(lista, id);
-    if (exp == NULL) {
+    if (exp == NULL)
+    {
         printf("\n<<< ERROR: NO EXISTE EXPRESION CON ESE INDICE >>>\n");
         return;
     }
 
-    // Evaluar
+    // evaluar
     int resultado = evaluarExpresion(exp, valorNum);
 
     printf("\n --> RESULTADO DE LA EXPRESION [%d] CON X = %d: %d\n", id, valorNum, resultado);
@@ -211,6 +219,42 @@ void ejecutar_calcular(ListaPalabras listaPars, ListaExp lista)
 void ejecutar_iguales(ListaPalabras listaPars, ListaExp lista)
 {
     printf("\nComando ejecutado: IGUALES");
+
+    if (largoListaPalabras(listaPars) != 2)
+    {
+        printf("\n<<< ERROR: CANTIDAD DE PARAMETROS INCORRECTA >>>\n");
+        return;
+    }
+
+    string id1str = listaPars->palabra;
+    string id2str = listaPars->sig->palabra;
+
+    if (!esPositivo(id1str) || !esPositivo(id2str))
+    {
+        printf("\n<<< ERROR: LOS INDICES DEBEN SER ENTEROS POSITIVOS >>>\n");
+        return;
+    }
+
+    int id1 = convertirAEntero(id1str);
+    int id2 = convertirAEntero(id2str);
+
+    ArbolExp exp1 = obtenerExpresion(lista, id1);
+    ArbolExp exp2 = obtenerExpresion(lista, id2);
+
+    if (exp1 == NULL || exp2 == NULL)
+    {
+        printf("\n<<< ERROR: ALGUNO DE LOS INDICES NO EXISTE >>>\n");
+        return;
+    }
+
+    if (igualesExpresiones(exp1, exp2) == TRUE)
+    {
+        printf("\n --> LAS EXPRESIONES [%d] y [%d] SON IGUALES\n", id1, id2);
+    }
+    else
+    {
+        printf("\n --> LAS EXPRESIONES [%d] y [%d] SON DISTINTAS\n", id1, id2);
+    }
 }
 
 void ejecutar_guardar(ListaPalabras listaPars, ListaExp lista)

@@ -143,4 +143,42 @@ int evaluarExpresion(ArbolExp a, int valor)
     }
 }
 
-boolean igualesExpresiones(ArbolExp a1, ArbolExp a2) {}
+boolean igualesExpresiones(ArbolExp a1, ArbolExp a2)
+{
+    if (a1 == NULL && a2 == NULL)
+        return TRUE;
+
+    if (a1 == NULL || a2 == NULL)
+        return FALSE;
+
+    if (a1->tipo != a2->tipo)
+        return FALSE;
+
+    switch (a1->tipo)
+    {
+    case NUMERO:
+        if (a1->dato.valor != a2->dato.valor)
+            return FALSE;
+        break;
+
+    case VARIABLE:
+        if (a1->dato.variable != a2->dato.variable)
+            return FALSE;
+        break;
+
+    case OPERADOR:
+        if (a1->dato.operador != a2->dato.operador)
+            return FALSE;
+        break;
+
+    case PARENTESIS:
+        if (a1->dato.parentesis != a2->dato.parentesis)
+            return FALSE;
+        break;
+    }
+
+    if (igualesExpresiones(a1->izq, a2->izq) && igualesExpresiones(a1->der, a2->der))
+        return TRUE;
+    else 
+        return FALSE;
+}
